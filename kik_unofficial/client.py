@@ -635,9 +635,8 @@ class KikClient:
 
         # create the connection and launch the asyncio loop
         self.connection = KikConnection(self.loop, self)
-        connection_coroutine = self.loop.create_connection(lambda: self.connection, HOST, PORT, ssl=True)
-        self.loop.run_until_complete(connection_coroutine)
-
+        coro = self.loop.create_connection(lambda: self.connection, HOST, PORT, ssl=True)
+        self.loop.run_until_complete(coro)
         log.debug("[!] Running main loop")
         self.loop.run_forever()
         log.debug("[!] Main loop ended.")
